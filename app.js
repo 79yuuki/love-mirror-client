@@ -54,7 +54,7 @@ app.use(function(err, req, res) {
 });
 
 // TODO local web socket server
-var io = require('socket.io-client'); // TODO こいつを使う
+var socket = require('socket.io-client')('http://love-mirror.herokuapp.com/');
 var WEBSOCKET_PORT = 2000;
 var WebSocketServer = require('ws').Server;
 var wss = new WebSocketServer({ port: WEBSOCKET_PORT });
@@ -63,6 +63,7 @@ wss.on('connection', function(ws) {
   ws.on('message', function(msg){
     console.log('received: %s', msg);
     // TODO emit start from socket.io-client
+    socket.emit('start');
   });
 });
 
