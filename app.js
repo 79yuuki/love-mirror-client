@@ -62,9 +62,18 @@ wss.on('connection', function(ws) {
   console.log("[WS] :: A new websocket connection was made!");
   ws.on('message', function(msg){
     console.log('received: %s', msg);
-    // TODO emit start from socket.io-client
-    socket.emit('start');
+
+    if (msg === 'start') {
+      socket.emit('start');
+    }
+
+    socket.on('finish', function(winner){
+      console.log('get winner from server', winner);
+      ws.send('winner', winner);
+    });
+
   });
 });
+
 
 module.exports = app;
